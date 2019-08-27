@@ -1,0 +1,63 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Michelle Saad
+	email = git@michsa.me
+
+[alias]
+	pl = pull
+	sync = !sh -c '[[ $1 && $1 != $(git bname) ]] && (git co $1 && git pl --ff-only && git co - && git merge --ff-only $1) || git pl --ff-only' --
+	syncd = !git sync develop
+	syncm = !git sync master
+	sync-merge = !sh -c '[[ $1 && $1 != $(git bname) ]] && (git co $1 && git pl && git co - && git merge $1) || git pl' --
+	syncd-merge = !git sync-merge develop
+	syncm-merge = !git sync-merge master
+	co = checkout
+	cof = !git checkout feature/$1 && :
+	cod = checkout develop
+	com = checkout master
+	boops = !git branch $1 && git reset --hard HEAD~$(git ahead) && git co
+
+	# useful info for piping into other stuff
+	bname = symbolic-ref --short HEAD
+	me = config --get user.name
+	ahead = !sh -c 'git rev-list --count origin/${1:-$(git bname)}...${1:-$(git bname)}' --
+	
+	# logging
+	s = status
+	b = branch
+	l = log --oneline --graph
+	logb = !git log --first-parent $(git bname)
+	logm = !git log --author=\"$(git me)\"
+	logbm = !git log --first-parent $(git bname) --author=\"$(git me)\"
+	lb = !git l --first-parent $(git bname)
+	lm = !git l --author=\"$(git me)\"
+	lbm = !git l --first-parent $(git bname) --author=\"$(git me)\"
+	# unpushed
+	lognp = log @{u}..
+	lnp = !git l @{u}..
+	# divergence
+	ld = !git log --left-right --graph --cherry-pick --oneline $(git bname)...origin/$(git bname) && :
+	
+	# add, commit, and push
+	a = add 
+	c = commit
+	ac = !git a . && git c
+	ca = !git c --amend --no-edit
+	cae = !git c --amend
+	aca = !git a . && git ca
+	p = push
+	pu = !git p -u origin HEAD
+	pf = !git p --force-with-lease
+	puf = !git pu --force-with-lease
+	acp = !git a . && git c -m "$1" && git p && :
+	acpf = !git ac
+	capf = !git ca && git pf
+	acapf = !git aca && git pf
+	
+	# resetting stuff
+	clear = checkout -- .
+	unstage = reset HEAD --
+	pop = reset HEAD~	
+
+# TODO
+# something for stash would be nice
