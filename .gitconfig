@@ -5,12 +5,13 @@
 
 [alias]
 	pl = pull
-	sync = !sh -c '[[ $1 && $1 != $(git bname) ]] && (git co $1 && git pl --ff-only && git co - && git merge --ff-only $1) || git pl --ff-only' --
+	pls = !git stash && git pl && git stash pop
+	sync = !sh -c '[[ $1 && $1 != $(git bname) ]] && (git co $1 && git pl && git co - && git merge $1) || git pl' --
 	syncd = !git sync develop
 	syncm = !git sync master
-	sync-merge = !sh -c '[[ $1 && $1 != $(git bname) ]] && (git co $1 && git pl && git co - && git merge $1) || git pl' --
-	syncd-merge = !git sync-merge develop
-	syncm-merge = !git sync-merge master
+	syncr = !sh -c '[[ $1 && $1 != $(git bname) ]] && (git co $1 && git pl --ff-only && git co - && git rebase $1) || git pl --rebase' --
+	syncrd = !git syncr develop
+	syncrm = !git syncr master
 	co = checkout
 	cof = !git checkout feature/$1 && :
 	cod = checkout develop
@@ -36,10 +37,10 @@
 	lognp = log @{u}..
 	lnp = !git l @{u}..
 	# divergence
-	ld = !git log --left-right --graph --cherry-pick --oneline $(git bname)...origin/$(git bname) && :
+	ld = !git fetch && git l --left-right --cherry-pick $(git bname)...origin/$(git bname) && :
 	
 	# add, commit, and push
-	a = add 
+	a = add
 	c = commit
 	ac = !git a . && git c
 	ca = !git c --amend --no-edit
@@ -60,4 +61,4 @@
 	pop = reset HEAD~	
 
 # TODO
-# something for stash would be nice
+# something for stash & rebase would be nice
