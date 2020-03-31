@@ -49,8 +49,10 @@
 	p = push
 	pu = !git p -u origin HEAD
 	pf = !git p --force-with-lease
+	pff = !git p --force
 	puf = !git pu --force-with-lease
-	acp = !git a . && git c -m "$1" && git p && :
+	puff = !git pu --force
+	acp = !git a . && git c -m `$1` && git p && :
 	acpf = !git ac
 	capf = !git ca && git pf
 	acapf = !git aca && git pf
@@ -62,3 +64,10 @@
 
 # TODO
 # something for stash & rebase would be nice
+
+# I don't remember where this came from, but whatever
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
