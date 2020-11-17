@@ -49,11 +49,12 @@
 	p = push
 	pu = !git p -u origin HEAD
 	pf = !git p --force-with-lease
-	pn = !git p --no-verify
-	pun = !git pu --no-verify
 	pff = !git p --force
 	puf = !git pu --force-with-lease
 	puff = !git pu --force
+	pn = !git p --no-verify
+	pun = !git pu --no-verify
+	pfn = !git pf --no-verify
 	acp = !git a . && git c -m `$1` && git p && :
 	acpf = !git ac
 	capf = !git ca && git pf
