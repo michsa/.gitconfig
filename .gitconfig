@@ -49,6 +49,8 @@
 	p = push
 	pu = !git p -u origin HEAD
 	pf = !git p --force-with-lease
+	pn = !git p --no-verify
+	pun = !git pu --no-verify
 	pff = !git p --force
 	puf = !git pu --force-with-lease
 	puff = !git pu --force
@@ -60,7 +62,14 @@
 	# resetting stuff
 	clear = checkout -- .
 	unstage = reset HEAD --
-	pop = reset HEAD~	
+	pop = reset HEAD~
+
+	# rebase & merge
+	m = merge
+	r = rebase
+	ri = !git r -i
+	ra = !git r --abort
+	ma = !git m --abort
 
 # TODO
 # something for stash & rebase would be nice
