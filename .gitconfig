@@ -69,7 +69,9 @@
 	m = merge
 	r = rebase
 	ri = !git r -i
+	rc = !git r --continue
 	ra = !git r --abort
+	mc = !git m --continue
 	ma = !git m --abort
 
 # TODO
