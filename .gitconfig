@@ -9,10 +9,10 @@
 [alias]
 	pl = pull
 	pls = !git stash && git pl && git stash pop
-	sync = !sh -c '[[ $1 && $1 != $(git bname) ]] && (git co $1 && git pl && git co - && git merge $1) || git pl' --
+	sync = !bash -c '[[ $1 && $1 != $(git bname) ]] && (git co $1 && git pl && git co - && git merge $1) || git pl' --
 	syncd = !git sync develop
 	syncm = !git sync master
-	syncr = !sh -c '[[ $1 && $1 != $(git bname) ]] && (git co $1 && git pl --ff-only && git co - && git rebase $1) || git pl --rebase' --
+	syncr = !bash -c '[[ $1 && $1 != $(git bname) ]] && (git co $1 && git pl --ff-only && git co - && git rebase $1) || git pl --rebase' --
 	syncrd = !git syncr develop
 	syncrm = !git syncr master
 	co = checkout
@@ -24,7 +24,7 @@
 	# useful info for piping into other stuff
 	bname = symbolic-ref --short HEAD
 	me = config --get user.name
-	ahead = !sh -c 'git rev-list --count origin/${1:-$(git bname)}...${1:-$(git bname)}' --
+	ahead = !bash -c 'git rev-list --count origin/${1:-$(git bname)}...${1:-$(git bname)}' --
 	
 	# logging
 	s = status
@@ -49,6 +49,7 @@
 	ca = !git c --amend --no-edit
 	cae = !git c --amend
 	aca = !git a . && git ca
+	acae = !git a . && git cae
 	p = push
 	pu = !git p -u origin HEAD
 	pf = !git p --force-with-lease
@@ -59,7 +60,7 @@
 	pun = !git pu --no-verify
 	pfn = !git pf --no-verify
 	acp = !git a . && git c -m `$1` && git p && :
-	acpf = !git ac
+	acpf = !git ac && git pf
 	capf = !git ca && git pf
 	acapf = !git aca && git pf
 	
@@ -74,11 +75,12 @@
 	ri = !git r -i
 	rc = !git r --continue
 	ra = !git r --abort
+	rs = !git r --skip
 	mc = !git m --continue
 	ma = !git m --abort
 
 # TODO
-# something for stash & rebase would be nice
+# something for stash would be nice
 
 # I don't remember where this came from, but whatever
 [filter "lfs"]
